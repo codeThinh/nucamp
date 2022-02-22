@@ -16,7 +16,7 @@ header h2 {
   color: yellow;
 }
 
-footer {
+.site-footer {
   background-image: linear-gradient(purple, yellow);
   padding: 20px 0;
 }
@@ -25,10 +25,15 @@ footer {
   padding: 30px;
   background-image: linear-gradient(to right, purple, yellow, white);
   color: white;
+  margin: 0;
 }
 
 .row-content {
   padding: 50px 0;
   border-bottom: 1px ridge;
   min-height: 200px;
+}
+
+.navbar {
+  background: #901cad;
 }
