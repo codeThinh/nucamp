@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
 }
@@ -13,7 +17,7 @@ h2 {
 }
 
 header h2 {
-  color: yellow;
+  color: purple;
 }
 
 .site-footer {
@@ -36,4 +40,10 @@ header h2 {
 
 .navbar {
   background: #901cad;
+}
+
+.tab-content {
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 0.625rem;
 }
