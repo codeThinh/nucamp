@@ -3,7 +3,7 @@ import {Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media} from 'rea
 import {Link} from 'react-router-dom';
 
 function RenderPartner({partner}) {
-  if ({partner}) {
+  if (partner) {
     return (
       <>
         <Media object src={partner.image} alt={partner.name} width="144" />
