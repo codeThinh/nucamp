@@ -1,22 +1,28 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
 
-export const addComment = (campsiteId, rating, author, text) => ({
-  type: ActionTypes.ADD_COMMENT,
-  payload: {
-    campsiteId,
-    rating,
-    author,
-    text,
-  },
-});
-
 export const fetchCampsites = () => dispatch => {
   dispatch(campsitesLoading());
 
   return fetch(baseUrl + 'campsites')
+    .then(
+      res => {
+        if (res.ok) {
+          return res;
+        } else {
+          const error = new Error(`Error ${res.status}: ${res.statusText}`);
+          error.res = res;
+          throw error;
+        }
+      },
+      error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
     .then(res => res.json())
-    .then(campsites => dispatch(addCampsites(campsites)));
+    .then(campsites => dispatch(addCampsites(campsites)))
+    .catch(error => dispatch(campsitesFailed(error.message)));
 };
 
 export const campsitesLoading = () => ({
@@ -35,8 +41,24 @@ export const addCampsites = campsites => ({
 
 export const fetchComments = () => dispatch => {
   return fetch(baseUrl + 'comments')
+    .then(
+      res => {
+        if (res.ok) {
+          return res;
+        } else {
+          const error = new Error(`Error ${res.status}: ${res.statusText}`);
+          error.res = res;
+          throw error;
+        }
+      },
+      error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
     .then(res => res.json())
-    .then(comments => dispatch(addComments(comments)));
+    .then(comments => dispatch(addComments(comments)))
+    .catch(error => dispatch(commentsFailed(error.message)));
 };
 
 export const commentsFailed = errMess => ({
@@ -49,12 +71,71 @@ export const addComments = comments => ({
   payload: comments,
 });
 
+export const addComment = comment => ({
+  type: ActionTypes.ADD_COMMENT,
+  payload: comment,
+});
+
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
+  const newComment = {
+    campsiteId,
+    rating,
+    author,
+    text,
+  };
+  newComment.date = new Date().toISOString();
+
+  return fetch(baseUrl + 'comments', {
+    method: 'POST',
+    body: JSON.stringify(newComment),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(
+      res => {
+        if (res.ok) {
+          return res;
+        } else {
+          const error = new Error(`Error ${res.status}: ${res.statusText}`);
+          error.res = res;
+          throw error;
+        }
+      },
+      error => {
+        throw error;
+      }
+    )
+    .then(res => res.json())
+    .then(res => dispatch(addComment(res)))
+    .catch(error => {
+      console.log('post comment', error.message);
+      alert('Your comment could not be posted\nError: ' + error.message);
+    });
+};
+
 export const fetchPromotions = () => dispatch => {
   dispatch(promotionsLoading());
 
   return fetch(baseUrl + 'promotions')
+    .then(
+      res => {
+        if (res.ok) {
+          return res;
+        } else {
+          const error = new Error(`Error ${res.status}: ${res.statusText}`);
+          error.res = res;
+          throw error;
+        }
+      },
+      error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
     .then(res => res.json())
-    .then(promotions => dispatch(addPromotions(promotions)));
+    .then(promotions => dispatch(addPromotions(promotions)))
+    .catch(error => dispatch(promotionsFailed(error.message)));
 };
 
 export const promotionsLoading = () => ({
