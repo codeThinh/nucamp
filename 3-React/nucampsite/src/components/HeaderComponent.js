@@ -17,7 +17,6 @@ import {
   Label,
 } from 'reactstrap';
 import {NavLink} from 'react-router-dom';
-import {toHaveStyle} from '@testing-library/jest-dom/dist/matchers';
 
 export default class Header extends Component {
   constructor(props) {

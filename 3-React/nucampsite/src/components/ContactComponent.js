@@ -1,13 +1,19 @@
 import {Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import React, {Component} from 'react';
-import {Control, Form, Errors, actions} from 'react-redux-form';
+import {Control, Form, Errors} from 'react-redux-form';
+import {headShake} from 'react-animations';
+import styled, {keyframes} from 'styled-components';
 
 const required = val => val && val.length;
 const maxLength = len => val => !val || val.length <= len;
 const minLength = len => val => val && val.length >= len;
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
+const Flash = styled.div`
+  animation: 2s ${keyframes`${headShake}`} infinite;
+`;
 
 export default class Contact extends Component {
   constructor(props) {
@@ -64,9 +70,11 @@ export default class Contact extends Component {
             </address>
           </div>
           <div className="col">
-            <a role="button" className="btn btn-link" href="tel:+12065551234">
-              <i className="fa fa-phone" /> 1-206-555-1234
-            </a>
+            <Flash>
+              <a role="button" className="btn btn-link" href="tel:+12065551234">
+                <i className="fa fa-phone" /> 1-206-555-1234
+              </a>
+            </Flash>
             <br />
             <a role="button" className="btn btn-link" href="mailto:fakeemail@fakeemail.co">
               <i className="fa fa-envelope-o" /> campsites@nucamp.co
