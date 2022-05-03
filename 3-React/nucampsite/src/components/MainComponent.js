@@ -31,13 +31,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   postComment: (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text),
+  postFeedback: feedback => postFeedback(feedback),
   fetchCampsites: () => fetchCampsites(),
   resetFeedbackForm: () => actions.reset('feedbackForm'),
   fetchComments: () => fetchComments(),
   fetchPromotions: () => fetchPromotions(),
   fetchPartners: () => fetchPartners(),
-  postFeedback: (firstName, lastName, phoneNum, email, agree, contactType, feedback) =>
-    postFeedback(firstName, lastName, phoneNum, email, agree, contactType, feedback),
 };
 
 class Main extends Component {
@@ -102,8 +101,8 @@ class Main extends Component {
                 path="/contactus"
                 render={() => (
                   <Contact
-                    resetFeedbackFrom={this.props.resetFeedbackForm}
                     postFeedback={this.props.postFeedback}
+                    resetFeedbackForm={this.props.resetFeedbackForm}
                   />
                 )}
               />
